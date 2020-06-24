@@ -16,12 +16,32 @@
       class="c-municipalities__entry__cta">
       {{ cms.configuration.ctaMunicipality }}
     </small>
+    <div>
+    <button
+      type="button"
+      class="btn"
+      @click="showModal"
+    >
+      Open Modal!
+    </button>
+
+    <modal
+      v-show="isModalVisible"
+      @close="closeModal"
+    />
+  </div>
   </li>
 </template>
 
 <script>
+import AddMunicipalityModal from './AddMunicipalityModal'
+
 export default {
+  components: {
+    AddMunicipalityModal
+  },
   props: {
+    isModalVisible: false,
     cms: {
       type: Object,
       default() {
@@ -45,9 +65,15 @@ export default {
     openMunicipality() {
       if (this.municipality.urlCityVizor) {
         window.location.href = this.municipality.urlCityVizor;
+      } else {
+        //show modal
       }
-
-      // @todo: fallback behavior, probably the contact form?
+    },
+    showModal() {
+        this.isModalVisible = true;
+      },
+    closeModal() {
+        this.isModalVisible = false;
     }
   }
 }
